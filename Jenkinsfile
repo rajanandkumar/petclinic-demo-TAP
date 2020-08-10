@@ -1,4 +1,8 @@
 pipeline{
+    environment {
+        registry =rajanand29/petclinic'
+        registrycredential= 'docker_hub_rajanand29'
+        dockerimage=''
    
 agent any
 stages{
@@ -17,12 +21,21 @@ stages{
      stage ('Build Docker Image') {
       steps{
         echo "Building Docker Image"
+          script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        }
                
       }
     }
      stage ('Push Docker Image') {
       steps{
         echo "Docker Image Pushing"
+         script {
+          docker.withRegistry( '', registryCredential ) {
+              dockerImage.push()
+              dockerImage.push('latest')
+          }
+        }
        
       }
     }
