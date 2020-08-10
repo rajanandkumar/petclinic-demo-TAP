@@ -3,7 +3,7 @@ pipeline{
         registry ='rajanand29/petclinic'
         registrycredential= 'docker_hub_rajanand29'
         dockerimage=''
-   
+    }
 agent any
 stages{
     stage ('Build') {
